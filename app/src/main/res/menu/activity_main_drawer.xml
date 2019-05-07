@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_dashboard"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="@string/menu_dashboard" />
+
+        <item
+            android:id="@+id/nav_activities"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="@string/menu_activities" />
+
+        <item
+            android:id="@+id/nav_supervisors"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="@string/menu_supervisor" />
+
+        <item
+            android:id="@+id/nav_brands"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="@string/menu_brands" />
+
+        <item
+            android:id="@+id/nav_stores"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="@string/menu_stores" />
+
+        <item
+            android:id="@+id/nav_users"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="@string/menu_users" />
+
+        <item
+            android:id="@+id/nav_groups"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="@string/menu_groups" />
+
+        <item
+            android:id="@+id/nav_chat"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="@string/menu_chat" />
+
+        <item
+            android:id="@+id/nav_drafts"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="@string/menu_drafts" />
+
+    </group>
+
+
+</menu>
