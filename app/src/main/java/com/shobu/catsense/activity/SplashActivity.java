@@ -13,6 +13,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        getSupportActionBar().hide();
 
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -20,6 +21,7 @@ public class SplashActivity extends AppCompatActivity {
             public void run()
             {
                 startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+                finish();
             }
         },3000);
 
