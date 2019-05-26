@@ -3,6 +3,8 @@ package com.shobu.catsense.activity;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -13,8 +15,16 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.widget.Toast;
 
 import com.shobu.catsense.R;
+import com.shobu.catsense.fragment.ActivitiesFragment;
+import com.shobu.catsense.fragment.BrandsFragment;
+import com.shobu.catsense.fragment.DashboardFragment;
+import com.shobu.catsense.fragment.GroupsFragment;
+import com.shobu.catsense.fragment.StoresFragment;
+import com.shobu.catsense.fragment.SupervisorsFragment;
+import com.shobu.catsense.fragment.UsersFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -34,6 +44,11 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
+        DashboardFragment df = new DashboardFragment();
+        FragmentManager fragmentManager = this.getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.content_main, df);
+        fragmentTransaction.commit();
 
     }
 
@@ -75,10 +90,70 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        /*if (id == R.id.nav_home)
+        if (id == R.id.nav_dashboard)
         {
-            // Handle the camera action
-        }*/
+            DashboardFragment df = new DashboardFragment();
+            FragmentManager fragmentManager = this.getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.content_main, df);
+            fragmentTransaction.commit();
+        }
+        else if (id == R.id.nav_activities)
+        {
+            ActivitiesFragment af = new ActivitiesFragment();
+            FragmentManager fragmentManager = this.getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.content_main, af);
+            fragmentTransaction.commit();
+        }
+        else if (id == R.id.nav_supervisors)
+        {
+            SupervisorsFragment sf = new SupervisorsFragment();
+            FragmentManager fragmentManager = this.getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.content_main, sf);
+            fragmentTransaction.commit();
+        }
+        else if (id == R.id.nav_brands)
+        {
+            BrandsFragment bf = new BrandsFragment();
+            FragmentManager fragmentManager = this.getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.content_main, bf);
+            fragmentTransaction.commit();
+        }
+        else if (id == R.id.nav_stores)
+        {
+            StoresFragment sf = new StoresFragment();
+            FragmentManager fragmentManager = this.getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.content_main, sf);
+            fragmentTransaction.commit();
+        }
+        else if (id == R.id.nav_users)
+        {
+            UsersFragment uf = new UsersFragment();
+            FragmentManager fragmentManager = this.getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.content_main, uf);
+            fragmentTransaction.commit();
+        }
+        else if (id == R.id.nav_groups)
+        {
+            GroupsFragment gf = new GroupsFragment();
+            FragmentManager fragmentManager = this.getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.content_main, gf);
+            fragmentTransaction.commit();
+        }
+        else if (id == R.id.nav_chat)
+        {
+            Toast.makeText(this, "Coming Soon", Toast.LENGTH_SHORT).show();
+        }
+        else if (id == R.id.nav_drafts)
+        {
+            Toast.makeText(this, "Coming Soon", Toast.LENGTH_SHORT).show();
+        }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
