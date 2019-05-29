@@ -39,8 +39,7 @@ import java.util.Map;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BrandsFragment extends Fragment
-{
+public class BrandsFragment extends Fragment {
     FloatingActionButton addBrand;
     ArrayList<Brand> allBrandsList;
 
@@ -49,7 +48,8 @@ public class BrandsFragment extends Fragment
     ProgressDialog progressDialog;
 
 
-    public BrandsFragment() { }
+    public BrandsFragment() {
+    }
 
 
     @Override
@@ -63,12 +63,10 @@ public class BrandsFragment extends Fragment
 
         addBrand.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 ShowAddBrandDialog();
             }
         });
-
 
 
         return view;
@@ -81,47 +79,37 @@ public class BrandsFragment extends Fragment
     }
 
 
-    private  void GetAllBrands()
-    {
+    private void GetAllBrands() {
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Loading Brands...");
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        new AsyncTask<Void, Void, String>()
-        {
+        new AsyncTask<Void, Void, String>() {
             @Override
-            protected String doInBackground(Void... voids)
-            {
-                try
-                {
+            protected String doInBackground(Void... voids) {
+                try {
                     GetBrandsFromServer();
-                }
-                catch(Exception e)
-                {
+                } catch (Exception e) {
                     progressDialog.dismiss();
-                    Log.v("LOGIN",e.getMessage().toString());
+                    Log.v("LOGIN", e.getMessage().toString());
                 }
                 return null;
             }
-        }.execute(null,null,null);
+        }.execute(null, null, null);
     }
 
-    private void GetBrandsFromServer()
-    {
+    private void GetBrandsFromServer() {
         String url = Constants.BASE_URL + Constants.GET_BRANDS;
         StringRequest brandStringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
-            public void onResponse(String response)
-            {
+            public void onResponse(String response) {
                 progressDialog.dismiss();
-                try
-                {
+                try {
                     allBrandsList = new ArrayList<>();
                     JSONArray responseArray = new JSONArray(response);
 
-                    for(int i = 0; i < responseArray.length(); i++)
-                    {
+                    for (int i = 0; i < responseArray.length(); i++) {
                         JSONObject brandJsonObject = responseArray.getJSONObject(i);
                         Brand brand = new Brand();
                         brand.setId(brandJsonObject.getString("idBrand"));
@@ -129,19 +117,17 @@ public class BrandsFragment extends Fragment
 
                         allBrandsList.add(brand);
                     }
-                    Log.v("LOGIN",Integer.toString(allBrandsList.size()));
+                    Log.v("LOGIN", Integer.toString(allBrandsList.size()));
 
                     brandsRecyclerAdapter = new BrandsRecyclerAdapter(getActivity(), allBrandsList, new BrandsRecyclerAdapter.OnItemClickListener() {
                         @Override
-                        public void onItemClick(Brand brand)
-                        {
+                        public void onItemClick(Brand brand) {
                             Toast.makeText(getActivity(), "On Click", Toast.LENGTH_SHORT).show();
                         }
                     },
                             new BrandsRecyclerAdapter.OnLongClickListener() {
                                 @Override
-                                public void onLongClick(Brand brand)
-                                {
+                                public void onLongClick(Brand brand) {
                                     Toast.makeText(getActivity(), "On Long click", Toast.LENGTH_SHORT).show();
                                 }
                             });
@@ -151,31 +137,27 @@ public class BrandsFragment extends Fragment
                     brandsRecyclerView.setItemAnimator(new DefaultItemAnimator());
                     brandsRecyclerView.setAdapter(brandsRecyclerAdapter);
 
-                }
-                catch(Exception e)
-                {
+                } catch (Exception e) {
                     Toast.makeText(getActivity(), "An error occurred. Please try again later.", Toast.LENGTH_SHORT).show();
-                    Log.v("LOGIN",e.getMessage());
+                    Log.v("LOGIN", e.getMessage());
                 }
             }
         },
-            new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error)
-                {
-                    progressDialog.dismiss();
-                    Toast.makeText(getActivity(), "Internet Issue. Please try again later.", Toast.LENGTH_SHORT).show();
-                    Log.v("LOGIN",error.getMessage());
-                }
-            });
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        progressDialog.dismiss();
+                        Toast.makeText(getActivity(), "Internet Issue. Please try again later.", Toast.LENGTH_SHORT).show();
+                        Log.v("LOGIN", error.getMessage());
+                    }
+                });
 
         RequestQueue brandRequestQueue = Volley.newRequestQueue(getActivity());
         brandRequestQueue.add(brandStringRequest);
 
     }
 
-    private void ShowAddBrandDialog()
-    {
+    private void ShowAddBrandDialog() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setCancelable(false);
         LayoutInflater inflater = getLayoutInflater();
@@ -209,79 +191,63 @@ public class BrandsFragment extends Fragment
 
     }
 
-    private void AddBrandName(String brandName)
-    {
+    private void AddBrandName(String brandName) {
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Please wait...");
         progressDialog.show();
 
         final HashMap<String, String> params = new HashMap<>();
-        params.put("brandName",brandName);
+        params.put("brandName", brandName);
 
 
-        new AsyncTask<Void, Void, String>()
-        {
+        new AsyncTask<Void, Void, String>() {
             @Override
             protected String doInBackground(Void... voids) {
-                try
-                {
+                try {
                     AddBrandNameToServer(params);
-                }
-                catch (Exception e)
-                {
+                } catch (Exception e) {
                     progressDialog.dismiss();
-                    Log.v("ADDBRAND",e.getMessage());
+                    Log.v("ADDBRAND", e.getMessage());
 
                 }
                 return null;
             }
-        }.execute(null,null,null);
+        }.execute(null, null, null);
     }
 
-    private void AddBrandNameToServer(final HashMap<String,String> param)
-    {
+    private void AddBrandNameToServer(final HashMap<String, String> param) {
         String url = Constants.BASE_URL + Constants.ADD_BRAND;
         StringRequest addBrandStringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
-            public void onResponse(String response)
-            {
+            public void onResponse(String response) {
                 progressDialog.dismiss();
 
-                try
-                {
+                try {
                     JSONObject responseObject = new JSONObject(response);
                     String status = responseObject.getString("status");
 
-                    if(status.equals("success"))
-                    {
+                    if (status.equals("success")) {
                         Toast.makeText(getActivity(), "Brand added successfully", Toast.LENGTH_SHORT).show();
                         GetAllBrands();
-                    }
-                    else if (status.equals("error"))
-                    {
+                    } else if (status.equals("error")) {
                         Toast.makeText(getActivity(), "Brand name already exists", Toast.LENGTH_SHORT).show();
                     }
-                }
-                catch(Exception e)
-                {
+                } catch (Exception e) {
                     Toast.makeText(getActivity(), "An error occurred. Please try again later", Toast.LENGTH_SHORT).show();
-                    Log.v("brand",e.getMessage());
+                    Log.v("brand", e.getMessage());
                 }
             }
         },
-            new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error)
-                {
-                    progressDialog.dismiss();
-                    Toast.makeText(getActivity(), "Internet Issue. Please try again later.", Toast.LENGTH_SHORT).show();
-                }
-            })
-        {
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        progressDialog.dismiss();
+                        Toast.makeText(getActivity(), "Internet Issue. Please try again later.", Toast.LENGTH_SHORT).show();
+                    }
+                }) {
             @Override
-            protected Map<String, String> getParams()
-            {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = param;
                 return params;
             }
@@ -291,9 +257,7 @@ public class BrandsFragment extends Fragment
         addBrandRequestQueue.add(addBrandStringRequest);
 
 
-
     }
-
 
 
 }

@@ -7,4 +7,5 @@ public class Constants
     public static final String LOGIN = "testapi.php";
     public static final String GET_BRANDS = "api/getBrands";
     public static final String ADD_BRAND = "api/addBrands";
+    public static String GET_Activity="api/getActivityBySupervisor/1";
 }
