@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -53,11 +54,12 @@ public class ActivitiesFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState)
+    {
         View view = inflater.inflate(R.layout.fragment_activities, container, false);
         getActivity().setTitle("Activities");
         activityRecyclerView = view.findViewById(R.id.recycler_view_activities);
-//        addActivityButton = view.findViewById(R.id.fab_add_activity);
+        addActivityButton = view.findViewById(R.id.fab_add_activity);
         addActivityButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,11 +102,13 @@ public class ActivitiesFragment extends Fragment {
             @Override
             public void onResponse(String response) {
                 progressDialog.dismiss();
-                try {
+                try
+                {
                     allActivityList = new ArrayList<>();
                     JSONArray responseArray = new JSONArray(response);
 
-                    for (int i = 0; i < responseArray.length(); i++) {
+                    for (int i = 0; i < responseArray.length(); i++)
+                    {
                         JSONObject activityJsonObject = responseArray.getJSONObject(i);
                         Activity activity = new Activity();
                         activity.setId(activityJsonObject.getString("idActivity"));
@@ -127,7 +131,7 @@ public class ActivitiesFragment extends Fragment {
                                 }
                             });
 
-                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+                    RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(),2);
                     activityRecyclerView.setLayoutManager(layoutManager);
                     activityRecyclerView.setItemAnimator(new DefaultItemAnimator());
                     activityRecyclerView.setAdapter(activityRecyclerAdapter);
