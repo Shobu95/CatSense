@@ -2,6 +2,8 @@ package com.shobu.catsense.fragment;
 
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -37,12 +39,13 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ActivitiesFragment extends Fragment {
+public class ActivitiesFragment extends Fragment
+{
+    SharedPreferences prefs;
 
     FloatingActionButton addActivityButton;
 
     ArrayList<Activity> allActivityList;
-
 
     RecyclerView activityRecyclerView;
     ActivityRecyclerAdapter activityRecyclerAdapter;
@@ -66,6 +69,8 @@ public class ActivitiesFragment extends Fragment {
                 ShowAddActivityDialog();
             }
         });
+
+        prefs = getActivity().getSharedPreferences(Constants.USER_PREFS, Context.MODE_PRIVATE);
 
         return view;
     }
@@ -96,8 +101,12 @@ public class ActivitiesFragment extends Fragment {
         }.execute(null, null, null);
     }
 
-    private void GetActivityFromServer() {
-        String url = Constants.BASE_URL + Constants.GET_Activity;
+    private void GetActivityFromServer()
+    {
+        String userId = prefs.getString("user_id","");
+
+
+        String url = Constants.BASE_URL + Constants.GET_ACTIVITY_BY_SUPERVISOR + userId;
         StringRequest activityStringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -131,7 +140,7 @@ public class ActivitiesFragment extends Fragment {
                                 }
                             });
 
-                    RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(),2);
+                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
                     activityRecyclerView.setLayoutManager(layoutManager);
                     activityRecyclerView.setItemAnimator(new DefaultItemAnimator());
                     activityRecyclerView.setAdapter(activityRecyclerAdapter);
@@ -156,7 +165,8 @@ public class ActivitiesFragment extends Fragment {
 
     }
 
-    private void ShowAddActivityDialog() {
+    private void ShowAddActivityDialog()
+    {
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         AddActivityDialogFullScreenFragment addActivity = new AddActivityDialogFullScreenFragment();
         FragmentTransaction transaction = fragmentManager.beginTransaction();

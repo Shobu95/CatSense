@@ -1,7 +1,9 @@
 package com.shobu.catsense.activity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,6 +22,7 @@ import com.android.volley.toolbox.Volley;
 import com.shobu.catsense.R;
 import com.shobu.catsense.helper.Constants;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -27,6 +30,7 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity
 {
+    SharedPreferences prefs;
 
     Button LoginButton;
     EditText emailText, passwordText;
@@ -118,6 +122,22 @@ public class LoginActivity extends AppCompatActivity
 
                     if(status.equals("success"))
                     {
+                        JSONObject dataObject = responseObject.getJSONObject("data");
+                        prefs = getSharedPreferences(Constants.USER_PREFS, Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = prefs.edit();
+
+                        editor.putString("user_id",dataObject.getString("id"));
+                        editor.putString("user_image",dataObject.getString("profile_image"));
+                        editor.putString("user_name",dataObject.getString("name"));
+                        editor.putString("user_email",dataObject.getString("email"));
+                        editor.putString("user_group_id",dataObject.getString("idGroup"));
+                        editor.putString("user_city_id",dataObject.getString("idCity"));
+                        editor.putString("user_phone",dataObject.getString("PhoneNumber"));
+                        editor.putString("user_cnic",dataObject.getString("CNIC"));
+                        editor.putString("login_status","true");
+
+                        editor.commit();
+
                         Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         finish();

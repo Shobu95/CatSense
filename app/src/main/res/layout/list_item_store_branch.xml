@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+<com.balysv.materialripple.MaterialRippleLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/RippleStyleBlack"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="10dp">
+    android:layout_height="wrap_content">
     
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Branch Name"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:id="@+id/txt_branch_name"
-        />
+        android:layout_marginLeft="70dp"
+        android:padding="10dp"/>
 
-</FrameLayout>
+</com.balysv.materialripple.MaterialRippleLayout>

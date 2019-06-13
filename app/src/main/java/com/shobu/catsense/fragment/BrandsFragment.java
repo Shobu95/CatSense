@@ -157,7 +157,8 @@ public class BrandsFragment extends Fragment {
 
     }
 
-    private void ShowAddBrandDialog() {
+    private void ShowAddBrandDialog()
+    {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setCancelable(false);
         LayoutInflater inflater = getLayoutInflater();

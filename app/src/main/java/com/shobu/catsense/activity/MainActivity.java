@@ -1,5 +1,7 @@
 package com.shobu.catsense.activity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,6 +17,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shobu.catsense.R;
@@ -25,9 +29,11 @@ import com.shobu.catsense.fragment.GroupsFragment;
 import com.shobu.catsense.fragment.StoresFragment;
 import com.shobu.catsense.fragment.SupervisorsFragment;
 import com.shobu.catsense.fragment.UsersFragment;
+import com.shobu.catsense.helper.Constants;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
+{
+    SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +49,22 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+
+        View navHeader = navigationView.getHeaderView(0);
+
+        ImageView userImageView = navHeader.findViewById(R.id.img_user_image);
+        TextView userNameText = navHeader.findViewById(R.id.txt_user_name);
+        TextView userEmailText = navHeader.findViewById(R.id.txt_user_email);
+
+        prefs = getSharedPreferences(Constants.USER_PREFS, Context.MODE_PRIVATE);
+
+        String userImage = prefs.getString("user_image","");
+        String userName = prefs.getString("user_name","");
+        String userEmail = prefs.getString("user_email","");
+
+        userNameText.setText(userName);
+        userEmailText.setText(userEmail);
+
 
         DashboardFragment df = new DashboardFragment();
         FragmentManager fragmentManager = this.getSupportFragmentManager();
@@ -71,12 +93,9 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+
         if (id == R.id.action_settings) {
             return true;
         }
@@ -84,10 +103,10 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
+
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
+
         int id = item.getItemId();
 
         if (id == R.id.nav_dashboard)
